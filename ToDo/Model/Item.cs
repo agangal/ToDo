@@ -17,6 +17,7 @@ namespace ToDo.Model
 
     public enum ItemState
     {
+        Created,
         NotStarted,
         InProgress,
         Paused,

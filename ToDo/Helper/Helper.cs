@@ -4,21 +4,32 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ToDo.Helper
+namespace ToDo
 {
     using Model;
+    using Windows.Storage;
+    using Newtonsoft.Json;
+
     public class Helper
     {
         #region File helper
 
-        public void WriteFile(string filename, string data)
+        private static async void WriteFile(string filename, string data)
         {
-
+            var applicationData = Windows.Storage.ApplicationData.Current;
+            var localFolder = applicationData.LocalFolder;
+            StorageFile file = await localFolder.CreateFileAsync(filename, CreationCollisionOption.ReplaceExisting);
+            await FileIO.WriteTextAsync(file, data);
         }
-        
-        public string ReadFile(string filename)
+
+        private static async Task<string> ReadFile(string filename)
         {
-            throw new NotImplementedException();
+            var applicationData = Windows.Storage.ApplicationData.Current;
+            var localFolder = applicationData.LocalFolder;
+            string response = null;
+            StorageFile sampleFile = await localFolder.GetFileAsync(filename);
+            response = await FileIO.ReadTextAsync(sampleFile);            
+            return response;
         }
 
         #endregion
@@ -42,21 +53,37 @@ namespace ToDo.Helper
 
         public void PausedItems()
         {
-
+            
         }
 
-        public void AllItemsByDate()
+        public static async Task<List<Item>> GetAllItems()
         {
+            try
+            {
+                string data = await ReadFile(Settings.FileDb);
+                if (String.IsNullOrEmpty(data))
+                    return null;
 
+                return JsonConvert.DeserializeObject<List<Item>>(data);
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
         }
 
         #endregion
 
         #region methods adding/updating items
 
-        public void AddNewItem(Item item)
+        public static async void AddNewItem(Item item)
         {
+            List<Item> currList = await Helper.GetAllItems();
+            if (currList == null)
+                currList = new List<Item>();
 
+            currList.Add(item);
+            WriteFile(Settings.FileDb, JsonConvert.SerializeObject(currList));
         }
 
         public void  UpdateItem(Item item)

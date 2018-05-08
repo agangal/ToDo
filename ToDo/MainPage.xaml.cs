@@ -17,14 +17,23 @@ using Windows.UI.Xaml.Navigation;
 
 namespace ToDo
 {
+    using Model;
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        public string DayNum = DateTime.Now.Day.ToString();
         public MainPage()
         {
             this.InitializeComponent();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            string d = NewTask.Text;
+            Item item = new Item { Title = d, Start = DateTime.UtcNow, State = ItemState.Created };
+            Helper.AddNewItem(item);
         }
     }
 }
