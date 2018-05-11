@@ -54,17 +54,28 @@ namespace ToDo
             Item clickedItem = obj.Content as Item;
             clickedItem.State = ItemState.Paused;
             App.AppHelper.UpdateItem(clickedItem);
+            currentItemList.Remove(clickedItem);
             pausedItemList.Add(clickedItem);
         }
 
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
-
+            ListViewItem obj = GetAncestorOfType<ListViewItem>(sender as Button);
+            Item clickedItem = obj.Content as Item;
+            clickedItem.State = ItemState.Canceled;
+            App.AppHelper.UpdateItem(clickedItem);
+            currentItemList.Remove(clickedItem);
+            pausedItemList.Remove(clickedItem);
         }
 
         private void CompleteButton_Click(object sender, RoutedEventArgs e)
         {
-
+            ListViewItem obj = GetAncestorOfType<ListViewItem>(sender as Button);
+            Item clickedItem = obj.Content as Item;
+            clickedItem.State = ItemState.Completed;
+            App.AppHelper.UpdateItem(clickedItem);
+            currentItemList.Remove(clickedItem);
+            pausedItemList.Remove(clickedItem);
         }
 
         private void AddNewTask_Click(object sender, RoutedEventArgs e)
