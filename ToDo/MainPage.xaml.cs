@@ -18,18 +18,50 @@ using Windows.UI.Xaml.Navigation;
 namespace ToDo
 {
     using Model;
+    using System.Collections.ObjectModel;
+
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        public ObservableCollection<Item> currentItemList { get; set; }
         public string DayNum = DateTime.Now.Day.ToString();
         public MainPage()
         {
             this.InitializeComponent();
+            currentItemList = new ObservableCollection<Item>();            
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// On page load, load existing items in to the view
+        /// </summary>
+        /// <param name="e"></param>
+        protected override async void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+            IEnumerable<Item> coll = await Helper.GetAllItems();
+
+            if (!(coll == null || coll.Count() == 0))
+                currentItemList = new ObservableCollection<Item>(coll);
+        }
+
+        private void PauseButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void DeleteButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void CompleteButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void AddNewTask_Click(object sender, RoutedEventArgs e)
         {
             string d = NewTask.Text;
             Item item = new Item { Title = d, Start = DateTime.UtcNow, State = ItemState.Created };

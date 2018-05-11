@@ -56,7 +56,7 @@ namespace ToDo
             
         }
 
-        public static async Task<List<Item>> GetAllItems()
+        public static async Task<IEnumerable<Item>> GetAllItems()
         {
             try
             {
@@ -78,7 +78,7 @@ namespace ToDo
 
         public static async void AddNewItem(Item item)
         {
-            List<Item> currList = await Helper.GetAllItems();
+            List<Item> currList = (await Helper.GetAllItems()).ToList();
             if (currList == null)
                 currList = new List<Item>();
 
