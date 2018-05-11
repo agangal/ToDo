@@ -36,9 +36,11 @@ namespace ToDo
 
         #region methods offering up data
 
-        public void CurrentItems()
+        public async Task<List<Item>> CurrentItems()
         {
-
+            List<Item> allItems =  (await this.GetAllItems()).ToList();
+            allItems = allItems.Where(c => c.State == ItemState.Created).ToList();
+            return allItems;
         }
 
         public void CurrentItems(DateTime startDate)
@@ -51,24 +53,26 @@ namespace ToDo
 
         }
 
-        public void PausedItems()
+        public async Task<List<Item>> PausedItems()
         {
-            
+            List<Item> allItems = (await this.GetAllItems()).ToList();
+            allItems = allItems.Where(c => c.State == ItemState.Paused).ToList();
+            return allItems;
         }
 
-        public static async Task<IEnumerable<Item>> GetAllItems()
+        public async Task<IEnumerable<Item>> GetAllItems()
         {
             try
             {
                 string data = await ReadFile(Settings.FileDb);
                 if (String.IsNullOrEmpty(data))
-                    return null;
+                    return new List<Item>();
 
                 return JsonConvert.DeserializeObject<List<Item>>(data);
             }
             catch (Exception ex)
             {
-                return null;
+                return new List<Item>();
             }
         }
 
@@ -76,9 +80,9 @@ namespace ToDo
 
         #region methods adding/updating items
 
-        public static async void AddNewItem(Item item)
+        public async void AddNewItem(Item item)
         {
-            List<Item> currList = (await Helper.GetAllItems()).ToList();
+            List<Item> currList = (await this.GetAllItems()).ToList();
             if (currList == null)
                 currList = new List<Item>();
 
@@ -86,14 +90,26 @@ namespace ToDo
             WriteFile(Settings.FileDb, JsonConvert.SerializeObject(currList));
         }
 
-        public void  UpdateItem(Item item)
+        public async void UpdateItem(Item item)
         {
+            List<Item> allItems = (await this.GetAllItems()).ToList();
+            if (String.IsNullOrEmpty(item.Id))
+                item.Id = Guid.NewGuid().ToString();
 
-        }
+            List<Item> updatedItems = new List<Item>();
+            foreach (var obj in allItems)
+            {                
+                if (obj.IsEquivalent(item))
+                {
+                    updatedItems.Add(item);
+                }
+                else
+                {
+                    updatedItems.Add(obj);
+                }
+            }
 
-        public void UpdateItemState(Item item, ItemState newState)
-        {
-
+            WriteFile(Settings.FileDb, JsonConvert.SerializeObject(updatedItems));
         }
 
         #endregion

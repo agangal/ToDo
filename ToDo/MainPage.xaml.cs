@@ -26,11 +26,13 @@ namespace ToDo
     public sealed partial class MainPage : Page
     {
         public ObservableCollection<Item> currentItemList { get; set; }
+        public ObservableCollection<Item> pausedItemList { get; set; }
         public string DayNum = DateTime.Now.Day.ToString();
         public MainPage()
         {
             this.InitializeComponent();
-            currentItemList = new ObservableCollection<Item>();            
+            currentItemList = new ObservableCollection<Item>();
+            pausedItemList = new ObservableCollection<Item>();
         }
 
         /// <summary>
@@ -40,7 +42,7 @@ namespace ToDo
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            IEnumerable<Item> coll = await Helper.GetAllItems();
+            IEnumerable<Item> coll = await App.AppHelper.GetAllItems();
 
             if (!(coll == null || coll.Count() == 0))
                 currentItemList = new ObservableCollection<Item>(coll);
@@ -48,7 +50,11 @@ namespace ToDo
 
         private void PauseButton_Click(object sender, RoutedEventArgs e)
         {
-
+            ListViewItem obj = GetAncestorOfType<ListViewItem>(sender as Button);
+            Item clickedItem = obj.Content as Item;
+            clickedItem.State = ItemState.Paused;
+            App.AppHelper.UpdateItem(clickedItem);
+            pausedItemList.Add(clickedItem);
         }
 
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
@@ -64,8 +70,20 @@ namespace ToDo
         private void AddNewTask_Click(object sender, RoutedEventArgs e)
         {
             string d = NewTask.Text;
-            Item item = new Item { Title = d, Start = DateTime.UtcNow, State = ItemState.Created };
-            Helper.AddNewItem(item);
+            Item item = new Item {Id = Guid.NewGuid().ToString(), Title = d, Start = DateTime.UtcNow, State = ItemState.Created };
+            App.AppHelper.AddNewItem(item);
+            if (currentItemList == null)
+                currentItemList = new ObservableCollection<Item>();
+
+            currentItemList.Add(item);
+        }
+
+        public T GetAncestorOfType<T>(FrameworkElement child) where T : FrameworkElement
+        {
+            var parent = VisualTreeHelper.GetParent(child);
+            if (parent != null && !(parent is T))
+                return (T)GetAncestorOfType<T>((FrameworkElement)parent);
+            return (T)parent;
         }
     }
 }

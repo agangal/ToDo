@@ -17,11 +17,23 @@ using Windows.UI.Xaml.Navigation;
 
 namespace ToDo
 {
+    
     /// <summary>
     /// Provides application-specific behavior to supplement the default Application class.
     /// </summary>
     sealed partial class App : Application
     {
+        private static Helper appHelper;
+        public static Helper AppHelper
+        {
+            get
+            {
+                if (appHelper == null)
+                    appHelper = new Helper();
+
+                return appHelper;
+            }
+        }
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
@@ -29,7 +41,7 @@ namespace ToDo
         public App()
         {
             this.InitializeComponent();
-            this.Suspending += OnSuspending;
+            this.Suspending += OnSuspending;          
         }
 
         /// <summary>
