@@ -42,7 +42,7 @@ namespace ToDo
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            IEnumerable<Item> coll = await App.AppHelper.GetAllItems();
+            IEnumerable<Item> coll = await App.AppHelper.CurrentItems();
 
             if (!(coll == null || coll.Count() == 0))
                 currentItemList = new ObservableCollection<Item>(coll);
