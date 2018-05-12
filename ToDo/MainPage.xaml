@@ -19,6 +19,12 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <!-- Style for Windows.UI.Xaml.Controls.ListViewItem -->
+        <Style TargetType="ListViewItem" x:Key="ToDoListViewItemContainerStyle">
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+            <Setter Property="Background" Value="#4E4D5D"></Setter>
+            <Setter Property="Margin" Value="0,20,0,0"></Setter>
+        </Style>
         <Style x:Key="ToDoTextboxStyle" TargetType="TextBox">
             <Setter Property="MinWidth" Value="{ThemeResource TextControlThemeMinWidth}"/>
             <Setter Property="MinHeight" Value="{ThemeResource TextControlThemeMinHeight}"/>
@@ -83,129 +89,132 @@
             </Setter>
         </Style>
     </Page.Resources>
-    <Grid Background="#403F4E">        
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="0.1*"></ColumnDefinition>
-            <ColumnDefinition Width="*"></ColumnDefinition>
-            <ColumnDefinition Width="0.1*"></ColumnDefinition>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"></RowDefinition>
-            <RowDefinition Height="0.4*"></RowDefinition>
-        </Grid.RowDefinitions>
-        <Grid Grid.Column="1">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"></RowDefinition>
-                <RowDefinition Height="*"></RowDefinition>
-            </Grid.RowDefinitions>
-            <Grid Grid.Row="0" Margin="0,25,0,35">
-                <Grid HorizontalAlignment="Left">
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="30" FontSize="40" FontWeight="Bold" Foreground="#FAF9FA" VerticalAlignment="Center"></TextBlock>
-                        <Grid Margin="5,0,5,0">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="*"></RowDefinition>
-                                <RowDefinition Height="*"></RowDefinition>
-                            </Grid.RowDefinitions>
-                            <TextBlock Text="Apr" FontSize="20" FontWeight="Bold" Foreground="#FAF9FA"></TextBlock>
-                            <TextBlock Text="2017" FontSize="20" Grid.Row="1" Foreground="#FAF9FA"></TextBlock>
-                        </Grid>
-                    </StackPanel>
-                </Grid>
-                <TextBlock HorizontalAlignment="Right" VerticalAlignment="Center" Text="Sunday" FontSize="20" Foreground="#FAF9FA"></TextBlock>
-            </Grid>
-            <Grid Grid.Row="1">
+    <Grid Background="#403F4E">
+        <ScrollViewer>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.1*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="0.1*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"></RowDefinition>
                     <RowDefinition Height="Auto"></RowDefinition>
-                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
                 </Grid.RowDefinitions>
-                <Grid Grid.Row="0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="0.6*"></ColumnDefinition>
-                        <ColumnDefinition Width="0.2*"></ColumnDefinition>
-                        <ColumnDefinition Width="0.2*"></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
-                    <Grid Grid.Column="0" Background="#5CDDA4" Height="20"></Grid>
-                    <Grid Grid.Column="1" Background="#F7FA6F" Height="20"></Grid>
-                    <Grid Grid.Column="2" Background="#2E2D33" Height="20"></Grid>
-                </Grid>
-                <Grid Grid.Row="1" Margin="0,40,0,0" MinHeight="70" Background="#2E2D33">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"></ColumnDefinition>
-                            <ColumnDefinition Width="Auto"></ColumnDefinition>
-                        </Grid.ColumnDefinitions>
-                        <TextBox Style="{StaticResource ToDoTextboxStyle}" x:Name="NewTask" Grid.Row="1" FontSize="20" 
+                <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0" Margin="0,25,0,35">
+                        <Grid HorizontalAlignment="Left">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="30" FontSize="40" FontWeight="Bold" Foreground="#FAF9FA" VerticalAlignment="Center"></TextBlock>
+                                <Grid Margin="5,0,5,0">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"></RowDefinition>
+                                        <RowDefinition Height="*"></RowDefinition>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Text="Apr" FontSize="20" FontWeight="Bold" Foreground="#FAF9FA"></TextBlock>
+                                    <TextBlock Text="2017" FontSize="20" Grid.Row="1" Foreground="#FAF9FA"></TextBlock>
+                                </Grid>
+                            </StackPanel>
+                        </Grid>
+                        <TextBlock HorizontalAlignment="Right" VerticalAlignment="Center" Text="Sunday" FontSize="20" Foreground="#FAF9FA"></TextBlock>
+                    </Grid>
+                    <Grid Grid.Row="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="0.6*"></ColumnDefinition>
+                                <ColumnDefinition Width="0.2*"></ColumnDefinition>
+                                <ColumnDefinition Width="0.2*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Grid Grid.Column="0" Background="#5CDDA4" Height="20"></Grid>
+                            <Grid Grid.Column="1" Background="#F7FA6F" Height="20"></Grid>
+                            <Grid Grid.Column="2" Background="#2E2D33" Height="20"></Grid>
+                        </Grid>
+                        <Grid Grid.Row="1" Margin="0,40,0,0" MinHeight="70" Background="#2E2D33">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <TextBox Style="{StaticResource ToDoTextboxStyle}" x:Name="NewTask" Grid.Row="1" FontSize="20" 
                              BorderBrush="Transparent" PlaceholderText="Track a new task" VerticalContentAlignment="Center"
                              Foreground="White" CharacterSpacing="50"    VerticalAlignment="Center"                         
                              Background="Transparent"></TextBox>
-                        <Button Content="&#xE109;" Grid.Row="1" FontFamily="Segoe MDL2 Assets" 
+                            <Button Content="&#xE109;" Grid.Row="1" FontFamily="Segoe MDL2 Assets" 
                             FontWeight="Bold" FontSize="25" Margin="10"
                             x:Name="AddNewTask" BorderBrush="Transparent" BorderThickness="0"
                             Foreground="White" Background="Transparent" Click="AddNewTask_Click" Grid.Column="1"></Button>
-                   
-                    
+
+
+                        </Grid>                        
+                    </Grid>
                 </Grid>
-                <Grid Grid.Row="2" Margin="0,25,0,0">
-                    <ListView x:Name="CurrentTaskList"
-                              ItemsSource="{x:Bind currentItemList}">
-                        <ListView.ItemContainerStyle>
-                            <Style TargetType="ListViewItem">
-                                <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>                               
-                            </Style>
-                        </ListView.ItemContainerStyle>
+                <Grid Grid.Column="1" Grid.Row="1">
+                    <ListView  x:Name="CurrentTaskList"     
+                               ItemContainerStyle="{StaticResource ToDoListViewItemContainerStyle}"
+                               ItemsSource="{x:Bind currentItemList}">                        
                         <ListView.ItemTemplate>
                             <DataTemplate x:DataType="data:Item">
-                                <Grid Background="#4E4D5D" MinHeight="70">
+                                <Grid Margin="12">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*"></ColumnDefinition>
                                         <ColumnDefinition Width="Auto"></ColumnDefinition>
                                         <ColumnDefinition Width="Auto"></ColumnDefinition>
                                         <ColumnDefinition Width="Auto"></ColumnDefinition>
                                     </Grid.ColumnDefinitions>
-                                    <TextBlock Text="{x:Bind Title}" VerticalAlignment="Center" FontSize="25" Foreground="White"></TextBlock>
-                                    <Button Content="&#xE10B;" FontSize="25" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                                            x:Name="CompleteButton" Background="Transparent"
-                                            FontFamily="Segoe MDL2 Assets" Click="CompleteButton_Click" Grid.Column="1" Foreground="#FF847C"></Button>
-                                    <Button Content="&#xE103;" FontSize="25" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                                            x:Name="PauseButton" Background="Transparent"
-                                            FontFamily="Segoe MDL2 Assets" Click="PauseButton_Click"  Grid.Column="2" Foreground="#FF847C"></Button>
-                                    <Button Content="&#xE106;" FontSize="25" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                                            x:Name="DeleteButton" Background="Transparent"
-                                            FontFamily="Segoe MDL2 Assets" Click="DeleteButton_Click"  Grid.Column="3" Foreground="#FF847C"></Button>
+                                    <TextBlock Text="{x:Bind Title}" FontSize="25" Foreground="White"></TextBlock>
+                                    <Button Content="&#xE10B;" FontSize="30" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                                            x:Name="CompleteButton" Background="Transparent" BorderBrush="Transparent"
+                                            FontFamily="Segoe MDL2 Assets" Click="CompleteButton_Click" Grid.Column="1" Foreground="#5CDDA4"></Button>
+                                    <Button Content="&#xE103;" FontSize="30" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                                            x:Name="PauseButton" Background="Transparent" BorderBrush="Transparent"
+                                            FontFamily="Segoe MDL2 Assets" Click="PauseButton_Click"  Grid.Column="2" Foreground="#F7FA6F"></Button>
+                                    <Button Content="&#xE106;" FontSize="30" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                                            x:Name="DeleteButton" Background="Transparent" BorderBrush="Transparent"
+                                            FontFamily="Segoe MDL2 Assets" Click="DeleteButton_Click"  Grid.Column="3" Foreground="#E36656"></Button>
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>                    
+                </Grid>
+                <Grid Grid.Column="1" Grid.Row="2" Margin="0,25,0,0">
+                    <ListView x:Name="PausedTaskList"
+                              ItemContainerStyle="{StaticResource ToDoListViewItemContainerStyle}"
+                              ItemsSource="{x:Bind pausedItemList}">                        
+                        <ListView.ItemTemplate>
+                            <DataTemplate x:DataType="data:Item">
+                                <Grid Margin="12">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="{x:Bind Title}" FontSize="25" Foreground="White"></TextBlock>
+                                    <Button Content="&#xE10B;" FontSize="30" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                                            x:Name="CompleteButton" Background="Transparent" BorderBrush="Transparent"
+                                            FontFamily="Segoe MDL2 Assets" Click="CompleteButton_Click" Grid.Column="1" Foreground="#5CDDA4"></Button>
+                                    <Button Content="&#xE103;" FontSize="30" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                                            x:Name="PauseButton" Background="Transparent" BorderBrush="Transparent"
+                                            FontFamily="Segoe MDL2 Assets" Click="PauseButton_Click"  Grid.Column="2" Foreground="#F7FA6F"></Button>
+                                    <Button Content="&#xE106;" FontSize="30" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                                            x:Name="DeleteButton" Background="Transparent" BorderBrush="Transparent"
+                                            FontFamily="Segoe MDL2 Assets" Click="DeleteButton_Click"  Grid.Column="3" Foreground="#E36656"></Button>
                                 </Grid>
                             </DataTemplate>
                         </ListView.ItemTemplate>
                     </ListView>
                 </Grid>
             </Grid>
-        </Grid>
-        <Grid Grid.Column="1" Grid.Row="1" Margin="0,25,0,25">
-            <ListView x:Name="PausedTaskList"
-                              ItemsSource="{x:Bind pausedItemList}">
-                <ListView.ItemContainerStyle>
-                    <Style TargetType="ListViewItem">
-                        <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
-                    </Style>
-                </ListView.ItemContainerStyle>
-                <ListView.ItemTemplate>
-                    <DataTemplate x:DataType="data:Item">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"></ColumnDefinition>
-                                <ColumnDefinition Width="Auto"></ColumnDefinition>
-                                <ColumnDefinition Width="Auto"></ColumnDefinition>
-                                <ColumnDefinition Width="Auto"></ColumnDefinition>
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Text="{x:Bind Title}" FontSize="25" Foreground="White"></TextBlock>
-                            <Button Content="&#xE10B;" FontSize="25" HorizontalAlignment="Center" x:Name="CompleteButton" FontFamily="Segoe MDL2 Assets" Click="CompleteButton_Click" Grid.Column="1" Foreground="#FF847C"></Button>
-                            <Button Content="&#xE103;" FontSize="25" HorizontalAlignment="Center" x:Name="PauseButton" FontFamily="Segoe MDL2 Assets" Click="PauseButton_Click"  Grid.Column="2" Foreground="#FF847C"></Button>
-                            <Button Content="&#xE106;" FontSize="25" HorizontalAlignment="Right" x:Name="DeleteButton" FontFamily="Segoe MDL2 Assets" Click="DeleteButton_Click"  Grid.Column="3" Foreground="#FF847C"></Button>
-                        </Grid>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </Grid>
+        </ScrollViewer>
+        
     </Grid>
         
 </Page>

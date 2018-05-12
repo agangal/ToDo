@@ -42,10 +42,13 @@ namespace ToDo
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            IEnumerable<Item> coll = await App.AppHelper.CurrentItems();
+            IEnumerable<Item> coll = await App.AppHelper.GetAllItems();
 
             if (!(coll == null || coll.Count() == 0))
-                currentItemList = new ObservableCollection<Item>(coll);
+            {
+                currentItemList = new ObservableCollection<Item>(coll.Where(c => c.State == ItemState.Created).ToList());
+                pausedItemList = new ObservableCollection<Item>(coll.Where(c => c.State == ItemState.Paused).ToList());
+            }
         }
 
         private void PauseButton_Click(object sender, RoutedEventArgs e)
